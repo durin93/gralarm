@@ -1,15 +1,14 @@
 package com.gram.alarm.domain;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gram.alarm.util.UrlBox;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,30 +16,40 @@ import org.springframework.web.client.RestTemplate;
 public class Crawler {
 
     private RestTemplate restTemplate;
+    private HttpEntity httpEntity;
+    private Mapper mapper;
 
-    public Crawler(RestTemplate restTemplate) {
+    @Autowired
+    public Crawler(RestTemplate restTemplate, Mapper mapper) {
         this.restTemplate = restTemplate;
+        this.mapper = mapper;
     }
 
-    public void getPrInfo() throws IOException {
+
+    @PostConstruct
+    private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token 3b0455ef514f1c4226d6fcb07aa35a48c2cf0d03");
+        headers.set("Authorization", "token 052841258aa97c5e2b42009956ed10b10a246959");
+        httpEntity = new HttpEntity(headers);
+    }
 
-        HttpEntity httpEntity = new HttpEntity<>(headers);
 
-        ResponseEntity<String> exchange = restTemplate
-            .exchange("https://api.github.com/repos/durin93/gralarm/pulls", HttpMethod.GET, httpEntity,
-                String.class);
+    public void getPrInfo() throws IOException {
+        PullData pullData = mapper.mappingPullData(crawlData());
+        checkSize(pullData);
+        //pr이 있으면 작업
+//        System.out.println(wow.get(0).get("url"));
+    }
 
-        String body = exchange.getBody();
+    private void checkSize(PullData pullData) {
+        if(pullData.size()==0){
+            System.out.println("앗 모든 pr close");
+        }
+    }
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<
-            Map<String, Object>> test = objectMapper
-            .readValue(body, new TypeReference<ArrayList<Map<String, Object>>>() {
-            });
-
-        Map<String, Object> wow = test.get(0);
-        System.out.println(wow.get("url"));
+    public String crawlData(){
+        return restTemplate
+            .exchange(UrlBox.GRALARM.getUrl(), HttpMethod.GET, httpEntity,
+                String.class).getBody();
     }
 }
