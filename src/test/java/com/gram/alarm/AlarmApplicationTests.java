@@ -39,28 +39,6 @@ public class AlarmApplicationTests {
     }
 
 
-    public void getPrInfo() throws IOException {
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization","token 593dc12f1929c1a514d1c93cb1e622d76db4139c");
-
-        HttpEntity httpEntity = new HttpEntity<>(headers);
-
-        ResponseEntity<String> exchange = restTemplate
-            .exchange("https://api.github.com/repos/durin93/gralarm/pulls", HttpMethod.GET, httpEntity,
-                String.class);
-
-        String body = exchange.getBody();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        List<
-            Map<String,Object>> test = objectMapper.readValue(body, new TypeReference<ArrayList<Map<String,Object>>>() {
-        });
-
-        Map<String, Object> wow =  test.get(0);
-        System.out.println(wow.get("url"));
-
-    }
 
 }
 
