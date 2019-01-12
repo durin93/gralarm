@@ -38,11 +38,11 @@ public class AlarmApplicationTests {
     public void contextLoads() {
     }
 
-
+   @Test
     public void getPrInfo() throws IOException {
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization","token 593dc12f1929c1a514d1c93cb1e622d76db4139c");
+        headers.set("Authorization","token 비번");
 
         HttpEntity httpEntity = new HttpEntity<>(headers);
 
