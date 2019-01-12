@@ -9,8 +9,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class CommonTestModule {
 
-    @Autowired
-    public Crawler crawler;
+//    @Autowired
+//    public Crawler crawler;
 
 //    public PullData getPullData(){
 //      return crawler.getPrInfo(;
