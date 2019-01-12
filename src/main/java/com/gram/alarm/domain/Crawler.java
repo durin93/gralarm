@@ -29,23 +29,20 @@ public class Crawler {
     @PostConstruct
     private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token 052841258aa97c5e2b42009956ed10b10a246959");
+        headers.set("Authorization", "token 693938c0206239d5a59e09f5e707b337c6240a4a");
         httpEntity = new HttpEntity(headers);
     }
 
 
-    public void getPrInfo() throws IOException {
+    public PullData getPrInfo() throws IOException {
         PullData pullData = mapper.mappingPullData(crawlData());
-        checkSize(pullData);
-        //pr이 있으면 작업
-//        System.out.println(wow.get(0).get("url"));
+        return pullData;
     }
 
-    private void checkSize(PullData pullData) {
-        if(pullData.size()==0){
-            System.out.println("앗 모든 pr close");
-        }
+    public List<String> getReviewer(PullData pulldata){
+        return (List<String>) pulldata.get(0).get("reviewer");
     }
+
 
     public String crawlData(){
         return restTemplate

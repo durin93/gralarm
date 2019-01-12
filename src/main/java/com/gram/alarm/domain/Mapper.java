@@ -20,8 +20,11 @@ public class Mapper {
     }
 
     public PullData mappingPullData(String pullData) throws IOException {
+
         return objectMapper.readValue(pullData, new TypeReference<PullData>() {});
     }
+
+
 
 
 }
