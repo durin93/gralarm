@@ -13,5 +13,11 @@ public class AlarmApplicationTests {
     public void contextLoads() {
     }
 
+    @Test
+    public void prCheck(){
+        System.out.println("pr check");
+    }
+
+
 }
 
