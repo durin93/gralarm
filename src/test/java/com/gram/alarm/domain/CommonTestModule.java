@@ -12,8 +12,8 @@ public class CommonTestModule {
     @Autowired
     public Crawler crawler;
 
-    public PullData getPullData(){
-      return crawler.crawlData();
-    }
+//    public PullData getPullData(){
+//      return crawler.getPrInfo(;
+//    }
 
 }
