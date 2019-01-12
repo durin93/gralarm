@@ -15,7 +15,7 @@ public class AlarmApplicationTests {
 
     @Test
     public void prCheck(){
-        
+
     }
 
 }
