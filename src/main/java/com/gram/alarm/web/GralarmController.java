@@ -1,5 +1,6 @@
 package com.gram.alarm.web;
 
+import com.gram.alarm.domain.Reviewer;
 import com.gram.alarm.service.AlarmService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ public class GralarmController {
 
     private AlarmService alarmService;
 
+
     @Autowired
     public GralarmController(AlarmService alarmService) {
         this.alarmService = alarmService;
@@ -22,8 +24,8 @@ public class GralarmController {
     public String main() throws IOException {
         alarmService.claimToReviewer();
 
-
         return "index";
     }
+
 
 }

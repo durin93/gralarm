@@ -6,10 +6,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public class PullRequest {
 
+    private JsonNode pullRequest;
     private Reviewers reviewers;
 
-    public PullRequest(JsonNode reviewers) {
-        this.reviewers = new Reviewers(reviewers.path("requested_reviewers"));
+    public PullRequest(JsonNode pullRequest) {
+        this.pullRequest = pullRequest;
+        this.reviewers = new Reviewers(pullRequest.path("requested_reviewers"));
     }
 
     public static PullRequest of(JsonNode reviewers) {
@@ -21,4 +23,7 @@ public class PullRequest {
         return reviewers;
     }
 
+    public JsonNode getPullRequest() {
+        return pullRequest;
+    }
 }
