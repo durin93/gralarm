@@ -1,4 +1,4 @@
-package com.gram.alarm.domain;
+package com.gram.alarm.domain.slack;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
@@ -12,23 +12,21 @@ public class SlackNotifier {
 
     private RestTemplate restTemplate;
 
-    private SlackMessageAttachement slackMessageAttachement;
+    private SlackMessageAttachement slackMessageAttachement = new SlackMessageAttachement();
 
-    private SlackMessage slackMessage;
+    private SlackMessage slackMessage = new SlackMessage();
 
 
     @Autowired
-    public SlackNotifier(RestTemplate restTemplate, SlackMessageAttachement slackMessageAttachement,
-        SlackMessage slackMessage) {
+    public SlackNotifier(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.slackMessageAttachement = slackMessageAttachement;
-        this.slackMessage = slackMessage;
     }
 
-    public void attachMessage(String message, JsonNode pullRequest) {
-        slackMessageAttachement.setTitle("PR 보냈습니다~~~");
-        slackMessageAttachement.setText(message);
+    public void attachMessage(String reviewer, JsonNode pullRequest) {
+        slackMessageAttachement.setAuthor_name(reviewer +" 님 !!!");
+        slackMessageAttachement.setText("requester : " + pullRequest.path("user").path("login").asText());
         slackMessageAttachement.setTitle_link(pullRequest.path("html_url").asText());
+        slackMessageAttachement.setText("title "+pullRequest.path("title")+"\n body " +pullRequest.path("body"));
     }
 
     public enum SlackTarget {
@@ -46,7 +44,7 @@ public class SlackNotifier {
 
     public boolean notify(SlackTarget target) {
         slackMessage.setChannel(target.channel);
-        slackMessage.setText("Gralarm @@@@");
+        slackMessage.setText("Gralarm API v1.0");
         slackMessage.setAttachments(Lists.newArrayList(slackMessageAttachement));
         try {
             restTemplate.postForEntity(target.webHookUrl, slackMessage, String.class);

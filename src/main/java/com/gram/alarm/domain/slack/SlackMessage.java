@@ -1,11 +1,8 @@
-package com.gram.alarm.domain;
+package com.gram.alarm.domain.slack;
 
 import com.google.common.collect.Lists;
 import java.util.List;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
-@Component
 public class SlackMessage {
 
     private String text;

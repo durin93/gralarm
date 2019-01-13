@@ -1,15 +1,22 @@
-package com.gram.alarm.domain;
+package com.gram.alarm.domain.slack;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class SlackMessageAttachement {
 
-    private String color;
-    private String pretext;
-    private String title;
+    private String color = "#36a64f";
+    private String pretext = "github pull request 알람";
+    private String title = "PR 보냈습니다 ~~~";
     private String title_link;
     private String text;
+    private String author_name;
+
+
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
 
     public String getColor() {
         return color;

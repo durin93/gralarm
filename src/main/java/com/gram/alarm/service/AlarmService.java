@@ -2,7 +2,7 @@ package com.gram.alarm.service;
 
 import com.gram.alarm.domain.Crawler;
 import com.gram.alarm.domain.PullData;
-import com.gram.alarm.domain.SlackNotifier;
+import com.gram.alarm.domain.slack.SlackNotifier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
