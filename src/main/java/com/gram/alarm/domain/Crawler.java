@@ -26,7 +26,7 @@ public class Crawler {
     @PostConstruct
     private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token c9975c44e9ceded02491287e828980954bb4c140");
+        headers.set("Authorization", "token 암호");
         httpEntity = new HttpEntity(headers);
     }
 
