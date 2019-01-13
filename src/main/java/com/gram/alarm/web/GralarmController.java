@@ -1,8 +1,6 @@
 package com.gram.alarm.web;
 
-import com.gram.alarm.domain.Reviewer;
 import com.gram.alarm.service.AlarmService;
-import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +19,8 @@ public class GralarmController {
 
 
     @GetMapping("/")
-    public String main() throws IOException {
+    public String main() {
         alarmService.claimToReviewer();
-
         return "index";
     }
 

@@ -1,8 +1,6 @@
 package com.gram.alarm.domain;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import java.util.List;
-import java.util.Map;
 
 public class Reviewers {
 
@@ -24,4 +22,7 @@ public class Reviewers {
         return Reviewer.of(reviewers.get(number));
     }
 
+    public int size() {
+    return reviewers.size();
+    }
 }

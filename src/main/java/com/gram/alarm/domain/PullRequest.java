@@ -1,13 +1,14 @@
 package com.gram.alarm.domain;
 
 import com.fasterxml.jackson.databind.JsonNode;
-
+import com.gram.alarm.domain.SlackNotifier.SlackTarget;
 
 
 public class PullRequest {
 
     private JsonNode pullRequest;
     private Reviewers reviewers;
+
 
     public PullRequest(JsonNode pullRequest) {
         this.pullRequest = pullRequest;
@@ -19,11 +20,18 @@ public class PullRequest {
     }
 
 
-    public Reviewers getReviewers() {
-        return reviewers;
+    public void makeMessage(SlackNotifier slackNotifier) {
+        for (int k = 0; k < reviewers.size(); k++) {
+            slackNotifier.attachMessage(makeMessage(reviewers.getReviewer(k)), pullRequest);
+            slackNotifier.notify(SlackTarget.CH_INCOMING);
+        }
     }
 
-    public JsonNode getPullRequest() {
-        return pullRequest;
+    private String makeMessage(Reviewer reviewer){
+        return
+        "requester : " + pullRequest.path("user").path("login").asText() + "\n reviewer "
+            + reviewer
+            .getName()+"\n title : "+pullRequest.path("title")+"\n body : "+pullRequest.path("body");
     }
+
 }

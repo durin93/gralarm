@@ -15,34 +15,23 @@ public class Crawler {
 
     private RestTemplate restTemplate;
     private HttpEntity httpEntity;
-    private Mapper mapper;
     private PullData pullData;
 
     @Autowired
-    public Crawler(RestTemplate restTemplate, Mapper mapper) {
+    public Crawler(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
-        this.mapper = mapper;
     }
 
 
     @PostConstruct
     private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token e9bdbc5884595f62c024b906c3933049bb57b978");
+        headers.set("Authorization", "token 4918acdd9c4545c9b7d748d3b02c199f6b4c93ec");
         httpEntity = new HttpEntity(headers);
-        this.pullData = crawlRepositoryData();
     }
 
 
-    public PullData getPullData() {
-        return pullData;
-    }
-
-    public PullRequest getPullRequest(int index){
-        return PullRequest.of(pullData.getPullRequestByIndex(index));
-    }
-
-    private PullData crawlRepositoryData() {
+    public PullData crawlRepositoryData() {
         this.pullData =  PullData.of(restTemplate
             .exchange(UrlBox.GRALARM.getUrl(), HttpMethod.GET, httpEntity,
                 JsonNode.class).getBody());
