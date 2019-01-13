@@ -1,9 +1,7 @@
 package com.gram.alarm.domain;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gram.alarm.util.UrlBox;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -18,6 +16,7 @@ public class Crawler {
     private RestTemplate restTemplate;
     private HttpEntity httpEntity;
     private Mapper mapper;
+    private PullData pullData;
 
     @Autowired
     public Crawler(RestTemplate restTemplate, Mapper mapper) {
@@ -29,24 +28,25 @@ public class Crawler {
     @PostConstruct
     private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token 693938c0206239d5a59e09f5e707b337c6240a4a");
+        headers.set("Authorization", "token 0ceab1f4863e238a0be308a18cc78f4b59b73140");
         httpEntity = new HttpEntity(headers);
+        this.pullData = crawlRepositoryData();
     }
 
 
-    public PullData getPrInfo() throws IOException {
-        PullData pullData = mapper.mappingPullData(crawlData());
+    public PullData getPullData() {
         return pullData;
     }
 
-    public List<String> getReviewer(PullData pulldata){
-        return (List<String>) pulldata.get(0).get("reviewer");
+    public PullRequest getPullRequest(int index){
+        return PullRequest.of(pullData.getPullRequestByIndex(index));
     }
 
-
-    public String crawlData(){
-        return restTemplate
+    private PullData crawlRepositoryData() {
+        this.pullData =  PullData.of(restTemplate
             .exchange(UrlBox.GRALARM.getUrl(), HttpMethod.GET, httpEntity,
-                String.class).getBody();
+                JsonNode.class).getBody());
+
+        return pullData;
     }
 }
