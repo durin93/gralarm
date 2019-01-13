@@ -1,17 +1,19 @@
 package com.gram.alarm.domain;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 
 public class Reviewers {
-    private List<Map<String,Object>> reviewers;
 
-    public Reviewers(List<Map<String,Object>> reviewers) {
-        this.reviewers = reviewers;
+    private JsonNode reviewers;
+
+    public Reviewers(JsonNode requested_reviewers) {
+        this.reviewers = requested_reviewers;
     }
 
-    public String getName(int index){
-        return (String) reviewers.get(index).get("login");
+    public String getUserName(int number){
+        return reviewers.get(number).path("login").asText();
     }
 
 }

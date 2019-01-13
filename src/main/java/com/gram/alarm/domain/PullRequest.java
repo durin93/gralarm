@@ -1,19 +1,24 @@
 package com.gram.alarm.domain;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
 
-public class PullRequest extends HashMap<String,Object> {
+
+
+public class PullRequest {
 
     private Reviewers reviewers;
 
-    public void reviewedBy(List<Map<String,Object>> reviewers) {
-        //check리뷰어유무
-        this.reviewers =  new Reviewers(reviewers);
+    public PullRequest(JsonNode reviewers) {
+        this.reviewers = new Reviewers(reviewers.path("requested_reviewers"));
     }
+
+    public static PullRequest of(JsonNode reviewers) {
+        return new PullRequest(reviewers);
+    }
+
 
     public Reviewers getReviewers() {
         return reviewers;
     }
+
 }

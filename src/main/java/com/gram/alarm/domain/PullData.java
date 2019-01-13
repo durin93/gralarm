@@ -1,29 +1,21 @@
 package com.gram.alarm.domain;
 
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
 
 public class PullData {
 
-    private List<PullRequest> pullRequests;
+    private JsonNode pullRequests;
 
-    public PullData(List<PullRequest> pullRequests) {
-        this.pullRequests = pullRequests;
+    private PullData(JsonNode pullData) {
+        this.pullRequests = pullData;
     }
 
-    public static PullData of(List<PullRequest> mappingPullData) {
-
-        for(int i = 0 ; i < mappingPullData.size(); i++){
-            List<Map<String,Object>> reviewrs = (List<Map<String, Object>>) mappingPullData.get(i).get("requested_reviewers");
-            mappingPullData.get(i).reviewedBy(reviewrs);
-        }
-
-
-         return new PullData(mappingPullData);
+    public static PullData of(JsonNode pullData) {
+        return new PullData(pullData);
     }
 
 
-    public PullRequest get(int i) {
-      return pullRequests.get(i);
+    public JsonNode getPullRequestByIndex(int i) {
+        return pullRequests.get(i);
     }
 }

@@ -1,7 +1,7 @@
 package com.gram.alarm.domain;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.gram.alarm.util.UrlBox;
-import java.io.IOException;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,6 +16,7 @@ public class Crawler {
     private RestTemplate restTemplate;
     private HttpEntity httpEntity;
     private Mapper mapper;
+    private PullData pullData;
 
     @Autowired
     public Crawler(RestTemplate restTemplate, Mapper mapper) {
@@ -27,30 +28,25 @@ public class Crawler {
     @PostConstruct
     private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token fc929e644bf932fa12155ae1ec3e75282099766e");
+        headers.set("Authorization", "token 038ce35b28ec4d2c1159ceff364e11f36d96e9e2");
         httpEntity = new HttpEntity(headers);
+        this.pullData = crawlRepositoryData();
     }
 
 
-    public PullData getPrInfo() throws IOException {
-        return  PullData.of(mapper.mappingPullData(crawlData()));
+    public PullData getPullData() {
+        return pullData;
     }
 
-    //
-    public PullRequest getReviewer(PullData pulldata) throws IOException {
-        PullRequest pullRequest =  pulldata.get(0); //일단은 PR1
-
-        Reviewers reviewers = pullRequest.getReviewers();
-
-
-        System.out.println(        reviewers.getName(0));
-        return null;
+    public PullRequest getPullRequest(int index){
+        return PullRequest.of(pullData.getPullRequestByIndex(index));
     }
 
-
-    public String crawlData(){
-        return restTemplate
+    private PullData crawlRepositoryData() {
+        this.pullData =  PullData.of(restTemplate
             .exchange(UrlBox.GRALARM.getUrl(), HttpMethod.GET, httpEntity,
-                String.class).getBody();
+                JsonNode.class).getBody());
+
+        return pullData;
     }
 }

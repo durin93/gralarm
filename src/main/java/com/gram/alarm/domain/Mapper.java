@@ -18,10 +18,6 @@ public class Mapper {
     }
 
 
-    public List<PullRequest> mappingPullData(String pullData) throws IOException {
-        return objectMapper.readValue(pullData, new TypeReference<ArrayList<PullRequest>>() {});
-    }
-
 
 
 
