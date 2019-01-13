@@ -28,7 +28,7 @@ public class Crawler {
     @PostConstruct
     private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token d9c8c94cf483a4190e420d47368d330d1d588753");
+        headers.set("Authorization", "token e9bdbc5884595f62c024b906c3933049bb57b978");
         httpEntity = new HttpEntity(headers);
         this.pullData = crawlRepositoryData();
     }
