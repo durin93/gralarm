@@ -17,11 +17,11 @@ public class CrawlerTest {
         crawler = new Crawler(restTemplate);
     }
 
-    @Test
-    public void getPrInfo() throws IOException {
-
-       crawler.getPrInfo();
-
-    }
+//    @Test
+//    public void getPrInfo() throws IOException {
+//
+//       crawler.getPrInfo();
+//
+//    }
 
 }
