@@ -1,5 +1,11 @@
 package com.gram.alarm.domain;
 
-public class Reviewer {
+import java.util.Map;
 
+public class Reviewer {
+  private    Map<String,Object> reviewer;
+
+  public String getId(){
+      return (String) reviewer.get("login");
+  }
 }

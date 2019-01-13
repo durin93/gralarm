@@ -24,7 +24,6 @@ public class GralarmController {
 
     @GetMapping("/")
     public String main() throws IOException {
-
         crawler.getReviewer(crawler.getPrInfo());
         return "index";
     }

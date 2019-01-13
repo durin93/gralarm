@@ -11,17 +11,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class Mapper {
 
-    private PullData pullData;
     private ObjectMapper objectMapper;
 
     public Mapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        pullData = new PullData();
     }
 
-    public PullData mappingPullData(String pullData) throws IOException {
 
-        return objectMapper.readValue(pullData, new TypeReference<PullData>() {});
+    public List<PullRequest> mappingPullData(String pullData) throws IOException {
+        return objectMapper.readValue(pullData, new TypeReference<ArrayList<PullRequest>>() {});
     }
 
 

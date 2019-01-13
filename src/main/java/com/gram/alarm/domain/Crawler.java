@@ -2,8 +2,6 @@ package com.gram.alarm.domain;
 
 import com.gram.alarm.util.UrlBox;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -29,18 +27,24 @@ public class Crawler {
     @PostConstruct
     private void setUp() {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "token 693938c0206239d5a59e09f5e707b337c6240a4a");
+        headers.set("Authorization", "token fc929e644bf932fa12155ae1ec3e75282099766e");
         httpEntity = new HttpEntity(headers);
     }
 
 
     public PullData getPrInfo() throws IOException {
-        PullData pullData = mapper.mappingPullData(crawlData());
-        return pullData;
+        return  PullData.of(mapper.mappingPullData(crawlData()));
     }
 
-    public List<String> getReviewer(PullData pulldata){
-        return (List<String>) pulldata.get(0).get("reviewer");
+    //
+    public PullRequest getReviewer(PullData pulldata) throws IOException {
+        PullRequest pullRequest =  pulldata.get(0); //일단은 PR1
+
+        Reviewers reviewers = pullRequest.getReviewers();
+
+
+        System.out.println(        reviewers.getName(0));
+        return null;
     }
 
 
