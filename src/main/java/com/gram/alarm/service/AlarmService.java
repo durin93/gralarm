@@ -31,7 +31,7 @@ public class AlarmService {
         Reviewers reviewers = pullRequest.getReviewers();
 
         Reviewer reviewer = reviewers.getReviewer(0);
-        String message = "requester "+pullRequest.getPullRequest().path("user").path("login").asText()+" reviewer"+reviewer +reviewer.getName();
+        String message = "requester "+pullRequest.getPullRequest().path("user").path("login").asText()+" reviewer "+reviewer.getName();
 
         SlackMessageAttachement slackMessageAttachement = new SlackMessageAttachement();
         slackMessageAttachement.setTitle("pullRequest 발생");
